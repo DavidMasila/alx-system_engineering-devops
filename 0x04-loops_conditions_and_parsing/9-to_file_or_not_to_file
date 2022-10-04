@@ -2,20 +2,22 @@
 # This script is displaying information about the holbertonschool file.
 # use if and, else: check if the file exists and print:
 # If the file exists, does not exist, is empty or not, is a regular or not.
-name_file='bestschool'
-if [ -e $name_file ]
+file="./school"
+
+if [ -e "$file" ]
 then
-    echo "$name_file file exists"
-    if [ -s $name_file ]
-    then
-  echo "$name_file file is not empty"
-    else
-  echo "$name_file file is empty"
-    fi
-    if [ -f $name_file ]
-    then
-  echo "$name_file is a regular file"
-    fi
+        echo "school file exists"
+
+                if [ -s "$file" ]
+                then
+                        echo "school file is not empty"
+                else
+                        echo "school file is empty"
+                fi
+                if [ -f "$file" ]
+                then
+                        echo "school is a regular file"
+                fi
 else
-    echo "$name_file file does not exist"
+        echo "school file does not exist"
 fi
