@@ -8,5 +8,11 @@ apt-get -y update
 apt-get -y install nginx
 ufw allow 'Nginx HTTP'
 echo "$STRING" > /var/www/html/index.nginx-debian.html
-sed -i "37i\ $REDIRECT" "$FILE"
+sed -i "s/\tlocation / {\n\t\ttry_files $uri $uri/ =404; \n\t}\n $REDIRECT" "$FILE"
 service nginx restart
+
+location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
