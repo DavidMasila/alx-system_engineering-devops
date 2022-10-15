@@ -43,5 +43,5 @@ frontend scorprogfront
 
 backend scorprogservers
         balance roundrobin
-        server server_1 34.231.20.126
-        server server_2 18.205.26.139
+        server 22159-web-01 34.231.20.126:80 check
+        server 22159-web-02 18.205.26.139:80 check
