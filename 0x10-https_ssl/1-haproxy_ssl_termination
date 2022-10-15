@@ -38,5 +38,5 @@ frontend scorprogfrontend
 
 backend scorprogservers
         balance roundrobin
-        server server_1 3.233.233.40
+        server server_1 34.231.20.126
         server server_2 18.205.26.139
