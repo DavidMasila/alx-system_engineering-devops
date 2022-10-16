@@ -32,11 +32,13 @@ defaults
         errorfile 502 /etc/haproxy/errors/502.http
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
+        option forwardfor
+        option http-server-close
 
 frontend scorprogfront
         bind *:80
         bind *:443 ssl crt /etc/haproxy/certs/www.scorprog.tech.pem
-        redirect scheme https !{ ssl_fc }
+        redirect scheme https if !{ ssl_fc }
         redirect scheme https code 301 if !{ ssl_fc }
         default_backend scorprogservers
 
