@@ -4,19 +4,22 @@ This script uses requests on a REST API to gather data about employee and thier 
 
 """
 
-import requests
-import sys
+from requests import get
+from sys import argv
 
-if __name__ == "__main__":
-    user_id = sys.argv[1]
-    end_point = "https://jsonplaceholder.typicode.com/"
-    user = requests.get(end_point + 'users/{}'.format(user_id)).json()
-    todos = requests.get(end_point + 'todos?userId={}'.format(user_id)).json()
-    completed = []
-    for todo in todos:
-        if todo.get('completed') == True:
-            completed.append(todo)
-    print('Employee {} is done with tasks({}/{}):'.format(
-        user.get('name'), len(completed), len(todos)))
-    for task in completed:
-        print("\t{}".format(task.get('title')))
+if __name__ == '__main__':
+    main_url = 'https://jsonplaceholder.typicode.com'
+    todo_url = main_url + "/user/{}/todos".format(argv[1])
+    name_url = main_url + "/users/{}".format(argv[1])
+    todo_result = get(todo_url).json()
+    name_result = get(name_url).json()
+
+    todo_num = len(todo_result)
+    todo_complete = len([todo for todo in todo_result
+                         if todo.get("completed")])
+    name = name_result.get("name")
+    print("Employee {} is done with tasks({}/{}):"
+          .format(name, todo_complete, todo_num))
+    for todo in todo_result:
+        if (todo.get("completed")):
+            print("\t {}".format(todo.get("title")))
