@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-"""
-exporting data obtained from REST API to csv
+"""exporting data obtained from 
+REST API to csv
 """
 from csv import DictWriter, QUOTE_ALL
 from requests import get

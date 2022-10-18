@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-"""
-This script uses requests on a REST API to gather data about employee and thier tasks
-
+"""This script uses requests on a
+REST API to gather data about employee and thier tasks
 """
 
 from requests import get
