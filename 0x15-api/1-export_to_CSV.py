@@ -18,7 +18,7 @@ if __name__ == '__main__':
     for todo in todo_result:
         todo_dict = {}
         todo_dict.update({"USER_ID": argv[1], "USERNAME": empname_details.get(
-            'username'), "TASK_COMPLETED_STATUS": todo_result.get("completed"), "TASK_TITLE": todo_result.get("title")})
+            'username'), "TASK_COMPLETED_STATUS": todo.get("completed"), "TASK_TITLE": todo.get("title")})
 
         todo_list.append(todo_dict)
 
