@@ -15,11 +15,11 @@ if __name__ == '__main__':
     empname_details = get(empname_url).json()
 
     todo_total = len(todo_result)
-    todo_completed = len([todo for todo in todo_result
-                         if todo.get("completed")])
+    todo_completed = len(
+        [todo for todo in todo_result if todo.get("completed")])
     name = empname_details.get("name")
-    print("Employee {} is done with tasks({}/{}):"
-          .format(name, todo_completed, todo_total))
+    print("Employee {} is done with tasks({}/{}):".format(name,
+          todo_completed, todo_total))
     for todo in todo_result:
         if (todo.get("completed")):
             print("\t {}".format(todo.get("title")))
