@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Fetches information from a REST API and exports it in JSON format"""
+"""Fetches information from a REST API and 
+exports it in JSON format
+"""
 
 from ast import arg
 from json import dump
