@@ -1,7 +1,12 @@
 #!/usr/bin/python3
 """
+<<<<<<< HEAD
 Uses the JSON placeholder\
 api to query data about an employee
+=======
+Uses the JSON placeholder api to query\
+data about an employee
+>>>>>>> ba58f479f0ec9a89d881d71c0d124b7d513408a2
 """
 
 from requests import get
@@ -23,3 +28,4 @@ if __name__ == '__main__':
     for todo in todo_result:
         if (todo.get("completed")):
             print("\t {}".format(todo.get("title")))
+ist}, f)
