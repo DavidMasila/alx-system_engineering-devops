@@ -1,33 +1,31 @@
 #!/usr/bin/python3
-"""fetches information from JSONplaceholder API and exports to JSON"""
+"""Using what you did in the task #0, extend your Python script
+to export data in the JSON format for all todos of all users.
+"""
 
-from json import dump
-from requests import get
-from sys import argv
+import json
+import requests
 
 if __name__ == "__main__":
-    users_url = "https://jsonplaceholder.typicode.com/users"
-    users_result = get(users_url).json()
+    file_name = "todo_all_employees.json"
+    API = "https://jsonplaceholder.typicode.com"
+    my_dict = {}
 
-    big_dict = {}
-    for user in users_result:
-        todo_list = []
+    users = requests.get(API + "/users").json()
+    for user in users:
+        user_id = user.get("id")
+        user_name = user.get("username")
+        my_dict[user_id] = []
+        user_todos = requests.get(API + "/users/{}/todos"
+                                  .format(user_id)).json()
 
-        pep_fix = "https://jsonplaceholder.typicode.com"
-        todos_url = pep_fix + "/user/{}/todos".format(user.get("id"))
-        name_url = "https://jsonplaceholder.typicode.com/users/{}".format(
-            user.get("id"))
+        for todo in user_todos:
+            todo_dict = {
+                "username": user_name,
+                "task": todo.get('title'),
+                "completed": todo.get('completed')
+            }
+            my_dict[user_id].append(todo_dict)
 
-        todo_result = get(todos_url).json()
-        name_result = get(name_url).json()
-        for todo in todo_result:
-            todo_dict = {}
-            todo_dict.update({"username": name_result.get("username"),
-                              "task": todo.get("title"),
-                              "completed": todo.get("completed")})
-            todo_list.append(todo_dict)
-
-        big_dict.update({user.get("id"): todo_list})
-
-    with open("todo_all_employees.json", 'w') as f:
-        dump(big_dict, f)
+    with open(file_name, "w") as f:
+        f.write(json.dumps(my_dict))
