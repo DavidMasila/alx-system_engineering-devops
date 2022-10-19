@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 Using a REST API, for a given employee ID and returns information
