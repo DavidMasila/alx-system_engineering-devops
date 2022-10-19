@@ -1,44 +1,24 @@
 #!/usr/bin/python3
 """
-Using a REST API, for a given employee ID and returns information
-about his/her TODO list progress.
+Uses the JSON placeholder api to query data about an employee
 """
-from mmap import MADV_SEQUENTIAL
-from ossaudiodev import SNDCTL_DSP_BIND_CHANNEL
-import requests
-import sys
 
+from requests import get
+from sys import argv
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    main_url = 'https://jsonplaceholder.typicode.com'
+    todo_url = main_url + "/user/{}/todos".format(argv[1])
+    name_url = main_url + "/users/{}".format(argv[1])
+    todo_result = get(todo_url).json()
+    name_result = get(name_url).json()
 
-    id_user = int(sys.argv[1])
-    NUMBER_OF_DONE_TASKS = 0
-    TOTAL_NUMBER_OF_TASKS = 0
-    TASK_TITLE = []
-
-    req_todos = requests.get(
-        'https://jsonplaceholder.typicode.com/todos').json()
-    req_user = requests.get(
-        'https://jsonplaceholder.typicode.com/users').json()
-
-    print('Employee ', end='')
-
-    for i in req_user:
-        if id_user == i.get('id'):
-            EMPLOYEE_NAME = i.get('name')
-
-    for j in req_todos:
-        total_task = j.get('userId')
-        if total_task == id_user:
-            TOTAL_NUMBER_OF_TASKS += 1
-
-            number_task = j.get('completed')
-            if number_task is True:
-                NUMBER_OF_DONE_TASKS += 1
-                TASK_TITLE.append(j.get('title'))
-
-    print('{} is done with tasks({}/{}):'.format(
-        EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS))
-
-    for j in TASK_TITLE:
-        print('\t {}'.format(j))
+    todo_num = len(todo_result)
+    todo_complete = len([todo for todo in todo_result
+                         if todo.get("completed")])
+    name = name_result.get("name")
+    print("Employee {} is done with tasks({}/{}):"
+          .format(name, todo_complete, todo_num))
+    for todo in todo_result:
+        if (todo.get("completed")):
+            print("\t {}".format(todo.get("title")))
