@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
 """
-Uses requests to gather emplotee data from a REST API
-The information is exported as csv
+Uses requests to gather employee ID
+and Todo items from REST API
+Then exports the information to CSV
 """
 
 from csv import DictWriter, QUOTE_ALL
