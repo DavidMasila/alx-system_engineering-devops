@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Uses the JSON placeholder api to query data about an employee
+Uses the JSON placeholder\
+api to query data about an employee
 """
 
 from requests import get
