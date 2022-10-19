@@ -7,6 +7,7 @@ from requests import get
 from sys import argv
 
 if __name__ == "__main__":
+    """Get id from the console"""
     id = int(argv[1])
     emp_url = f'https://jsonplaceholder.typicode.com/users/{id}'
     task_url = f'https://jsonplaceholder.typicode.com/users/{id}/todos'
