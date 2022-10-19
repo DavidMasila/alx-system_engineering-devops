@@ -1,29 +1,42 @@
 #!/usr/bin/python3
 """
-fetches information from JSONplaceholder
-API and exports to JSON
+Using a REST API, for a given employee ID and returns information
+about his/her TODO list progress.
 """
-
-from json import dump
-from requests import get
-from sys import argv
+import csv
+import json
+import requests
+import sys
 
 
 if __name__ == "__main__":
-    id = int(argv[1])
-    emp_url = f'https://jsonplaceholder.typicode.com/users/{id}'
-    task_url = f'https://jsonplaceholder.typicode.com/users/{id}/todos'
 
-    emp_details = get(emp_url).json()
-    total_tasks = get(task_url).json()
+    id_user = int(sys.argv[1])
 
-    todo_list = []
+    req_todos = requests.get(
+        'https://jsonplaceholder.typicode.com/todos').json()
+    req_user = requests.get(
+        'https://jsonplaceholder.typicode.com/users').json()
 
-    for todo in total_tasks:
-        tasks_dict = {}
-        tasks_dict.update({"USER_ID": id, "USERNAME": emp_details.get('username'), "TASK_COMPLETED_STATUS":
-                          todo.get('completed'), "TASK_TITLE": todo.get('title')})
-        todo_list.append(tasks_dict)
+    j_file = sys.argv[1] + '.json'
 
-    with open("{}.json".format(argv[1]), 'w') as f:
-        dump({argv[1]: todo_list}, f)
+    with open(j_file, mode='w') as json_file:
+
+        jsonfile = {}
+
+        for i in req_user:
+            if id_user == i.get('id'):
+                USERNAME = i.get('username')
+
+        lists = []
+
+        for j in req_todos:
+            TASK_COMPLETED_STATUS = j.get('completed')
+            TASK_TITLE = j.get('title')
+            if id_user == j.get('userId'):
+                lists.append({'task': TASK_TITLE,
+                              'completed': TASK_COMPLETED_STATUS,
+                              'username': USERNAME})
+                jsonfile = {id_user: lists}
+
+        json.dump(jsonfile, json_file)

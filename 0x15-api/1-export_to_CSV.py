@@ -1,28 +1,37 @@
 #!/usr/bin/python3
+"""
+Using a REST API, for a given employee ID and returns information
+about his/her TODO list progress.
+"""
+import csv
+import requests
+import sys
 
-"""Using what you did in the task #0, extend your Python script to export data in the CSV format"""
-
-from csv import DictWriter, QUOTE_ALL
-from requests import get
-from sys import argv
 
 if __name__ == "__main__":
-    id = int(argv[1])
-    emp_url = f'https://jsonplaceholder.typicode.com/users/{id}'
-    task_url = f'https://jsonplaceholder.typicode.com/users/{id}/todos'
 
-    emp_details = get(emp_url).json()
-    total_tasks = get(task_url).json()
+    id_user = int(sys.argv[1])
 
-    todo_list = []
+    req_todos = requests.get(
+        'https://jsonplaceholder.typicode.com/todos').json()
+    req_user = requests.get(
+        'https://jsonplaceholder.typicode.com/users').json()
 
-    for todo in total_tasks:
-        tasks_dict = {}
-        tasks_dict.update({"USER_ID": id, "USERNAME": emp_details.get('username'), "TASK_COMPLETED_STATUS":
-                          todo.get('completed'), "TASK_TITLE": todo.get('title')})
-        todo_list.append(tasks_dict)
+    csv_file = sys.argv[1] + '.csv'
 
-    with open(f"{id}.csv", "w", newline="") as f:
-        fields = ['USER_ID', 'USERNAME', 'TASK_COMPLETED_STATUS', 'TASK_TITLE']
-        writer = DictWriter(f, fieldnames=fields, quoting=QUOTE_ALL)
-        writer.writerows(todo_list)
+    with open(csv_file, mode='w') as export_csv_file:
+        file_to_export = csv.writer(
+            export_csv_file, delimiter=',',
+            quotechar='"', quoting=csv.QUOTE_ALL)
+
+        for i in req_user:
+            if id_user == i.get('id'):
+                USERNAME = i.get('username')
+
+        for j in req_todos:
+            USER_ID = j.get('userId')
+            TASK_COMPLETED_STATUS = j.get('completed')
+            TASK_TITLE = j.get('title')
+            if id_user == j.get('userId'):
+                file_to_export.writerow([
+                    USER_ID, USERNAME, TASK_COMPLETED_STATUS, TASK_TITLE])
