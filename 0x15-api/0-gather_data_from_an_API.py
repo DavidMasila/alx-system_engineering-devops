@@ -3,6 +3,8 @@
 Using a REST API, for a given employee ID and returns information
 about his/her TODO list progress.
 """
+from mmap import MADV_SEQUENTIAL
+from ossaudiodev import SNDCTL_DSP_BIND_CHANNEL
 import requests
 import sys
 
