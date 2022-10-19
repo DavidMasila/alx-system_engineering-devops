@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 
-"""
-Uses requests to gather employee ID
-and Todo items from REST API
-"""
+"""Uses requests to gather employee ID and Todo items from REST API"""
 
 from requests import get
 from sys import argv
