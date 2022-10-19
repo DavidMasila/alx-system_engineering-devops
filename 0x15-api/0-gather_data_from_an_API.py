@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""
-Uses requests to gather employee 
+"""Uses requests to gather employee 
+
 ID and Todo items from REST API
 """
 
