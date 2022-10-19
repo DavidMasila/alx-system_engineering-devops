@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""gets information from JSONplaceholder API and exports it to JSON format locally"""
+"""
+gets information from JSONplaceholder API and exports it to JSON format locally
+"""
 
 from json import dump
 from requests import get
