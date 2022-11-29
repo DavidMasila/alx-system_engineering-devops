@@ -20,4 +20,3 @@ def top_ten(subreddit):
     else:
         for post in posts:
             print(post.get('data', {}).get('title', None))
-            
